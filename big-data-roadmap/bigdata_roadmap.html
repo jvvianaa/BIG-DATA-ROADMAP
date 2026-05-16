@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big Data Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(255,255,255,0.14);
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --hint: #3a3a50;
+
+    --p0: #7c7c8c; --p0l: #2a2a38;
+    --p1: #4f8ef7; --p1l: #0d1e3d;
+    --p2: #2fc898; --p2l: #0a2a20;
+    --p3-a: #a78bfa; --p3-al: #1e1530;
+    --p3-b: #f97316; --p3-bl: #2a1508;
+    --p3-c: #facc15; --p3-cl: #2a2200;
+    --p4: #e879f9; --p4l: #2a0a2e;
+    --p5: #34d399; --p5l: #0a2a1e;
+
+    --font: 'Syne', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 2rem 1.5rem;
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--p1), var(--p3-a));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 800; color: #fff;
+    flex-shrink: 0;
+  }
+
+  .logo-text h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+  .logo-text p { font-size: 12px; color: var(--muted); font-family: var(--mono); }
+
+  .global-progress {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .gp-bar-wrap {
+    width: 180px;
+    background: var(--hint);
+    border-radius: 4px;
+    height: 5px;
+    overflow: hidden;
+  }
+  .gp-bar { height: 5px; border-radius: 4px; background: linear-gradient(90deg, var(--p1), var(--p3-a)); transition: width .4s ease; }
+  .gp-label { font-size: 12px; font-family: var(--mono); color: var(--muted); white-space: nowrap; }
+  .gp-pct { font-size: 18px; font-weight: 700; color: var(--text); font-family: var(--mono); }
+
+  .reset-btn {
+    font-family: var(--font);
+    font-size: 12px;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .reset-btn:hover { border-color: var(--border-hover); color: var(--text); }
+
+  /* LAYOUT */
+  main { max-width: 920px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* PHASE */
+  .phase { margin-bottom: 2.5rem; }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .phase-num {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; font-family: var(--mono);
+    flex-shrink: 0;
+  }
+
+  .phase-info { flex: 1; }
+  .phase-info h2 { font-size: 16px; font-weight: 700; letter-spacing: -0.2px; }
+  .phase-info p { font-size: 12px; color: var(--muted); font-family: var(--mono); margin-top: 2px; }
+
+  .phase-mini-bar-wrap { width: 80px; background: var(--hint); border-radius: 3px; height: 3px; }
+  .phase-mini-bar { height: 3px; border-radius: 3px; transition: width .4s; }
+
+  .phase-pct { font-size: 12px; font-family: var(--mono); min-width: 36px; text-align: right; }
+
+  /* PILLARS grid */
+  .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+
+  .pillar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+    transition: border-color .2s;
+  }
+  .pillar:hover { border-color: var(--border-hover); }
+
+  .pillar-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .pillar-icon {
+    width: 28px; height: 28px;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .pillar-title { font-size: 14px; font-weight: 600; flex: 1; }
+  .pillar-count { font-size: 11px; font-family: var(--mono); color: var(--muted); }
+
+  /* TASKS */
+  .task {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: opacity .2s;
+  }
+  .task:last-child { border-bottom: none; padding-bottom: 0; }
+  .task:hover { opacity: .85; }
+
+  .task-box {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    border: 1.5px solid var(--hint);
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s;
+  }
+  .task-box.done {
+    background: var(--p5);
+    border-color: var(--p5);
+  }
+  .task-box.done::after {
+    content: '';
+    width: 8px; height: 5px;
+    border-left: 2px solid #0a2a1e;
+    border-bottom: 2px solid #0a2a1e;
+    transform: rotate(-45deg) translateY(-1px);
+    display: block;
+  }
+
+  .task-body { flex: 1; min-width: 0; }
+  .task-main { font-size: 13px; line-height: 1.4; transition: color .15s; }
+  .task-main.done { color: var(--muted); text-decoration: line-through; }
+  .task-sub { font-size: 11px; color: var(--muted); font-family: var(--mono); margin-top: 2px; }
+
+  /* TRILHAS label */
+  .trilha-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 2px 7px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
+
+  /* CERTS section */
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+
+  .cert-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: .9rem 1rem;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cert-card:hover { border-color: var(--border-hover); }
+  .cert-card.done { border-color: var(--p5); opacity: .7; }
+
+  .cert-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+    background: var(--p5l);
+    color: var(--p5);
+    transition: all .2s;
+  }
+  .cert-card.done .cert-icon { background: var(--p5); color: #0a2a1e; }
+
+  .cert-info { flex: 1; min-width: 0; }
+  .cert-name { font-size: 13px; font-weight: 600; }
+  .cert-sub { font-size: 11px; color: var(--muted); font-family: var(--mono); }
+
+  /* SALARY bar */
+  .salary-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem 1.5rem;
+    margin-top: 2rem;
+  }
+  .salary-section h3 { font-size: 14px; font-weight: 600; margin-bottom: 1rem; }
+  .salary-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .salary-label { font-size: 12px; font-family: var(--mono); color: var(--muted); width: 70px; flex-shrink: 0; }
+  .salary-bar-bg { flex: 1; background: var(--hint); border-radius: 4px; height: 6px; overflow: hidden; }
+  .salary-bar-fill { height: 6px; border-radius: 4px; }
+  .salary-range { font-size: 11px; font-family: var(--mono); color: var(--muted); white-space: nowrap; }
+
+  /* SECTION title */
+  .section-label {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+
+  /* animated entry */
+  .phase { animation: fadeUp .4s ease both; }
+  .phase:nth-child(1) { animation-delay: .05s; }
+  .phase:nth-child(2) { animation-delay: .1s; }
+  .phase:nth-child(3) { animation-delay: .15s; }
+  .phase:nth-child(4) { animation-delay: .2s; }
+  .phase:nth-child(5) { animation-delay: .25s; }
+  .phase:nth-child(6) { animation-delay: .3s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">BD</div>
+    <div class="logo-text">
+      <h1>Big Data Roadmap</h1>
+      <p>trilha de carreira completa</p>
+    </div>
+  </div>
+  <div class="global-progress">
+    <span class="gp-pct" id="gp-pct">0%</span>
+    <div>
+      <div class="gp-bar-wrap"><div class="gp-bar" id="gp-bar" style="width:0%"></div></div>
+      <div class="gp-label" id="gp-label">0 / 0 tarefas</div>
+    </div>
+    <button class="reset-btn" onclick="resetAll()">Resetar</button>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<script>
+const DATA = [
+  {
+    id: 'p0',
+    title: 'Fase 0 — Fundamentos',
+    period: '0–6 meses',
+    color: '#7c7c8c',
+    colorLight: '#2a2a38',
+    pillars: [
+      {
+        title: 'Python',
+        icon: '🐍',
+        tasks: [
+          { t: 'Instalar Python e configurar ambiente', s: 'python.org · VS Code · Jupyter Notebook' },
+          { t: 'Variáveis, tipos e estruturas de dados', s: 'listas, dicionários, tuplas, sets' },
+          { t: 'Loops, funções e condicionais', s: 'for, while, if/else, def, lambda' },
+          { t: 'Aprender Pandas para manipulação de dados', s: 'DataFrames, filtros, groupby, merge' },
+          { t: 'Mini-projeto: análise de um CSV real', s: 'dados do Kaggle ou dados.gov.br' },
+        ]
+      },
+      {
+        title: 'SQL',
+        icon: '🗄️',
+        tasks: [
+          { t: 'Entender bancos relacionais e tabelas', s: 'linhas, colunas, chave primária e estrangeira' },
+          { t: 'Comandos básicos: SELECT, WHERE, GROUP BY', s: 'praticar no SQLiteOnline ou Mode Analytics' },
+          { t: 'Aprender JOINs (INNER, LEFT, RIGHT)', s: 'fundamental para combinar tabelas' },
+          { t: 'Praticar com PostgreSQL ou SQLite localmente', s: 'instalar ou usar ElephantSQL grátis' },
+          { t: '20 exercícios no HackerRank SQL', s: 'seção SQL é gratuita' },
+        ]
+      },
+      {
+        title: 'Estatística básica',
+        icon: '📊',
+        tasks: [
+          { t: 'Média, mediana e moda', s: 'medidas de tendência central' },
+          { t: 'Variância e desvio padrão', s: 'como os dados se dispersam' },
+          { t: 'Correlação e distribuição normal', s: 'base para Machine Learning' },
+          { t: 'Criar gráficos com Matplotlib ou Seaborn', s: 'histograma, boxplot, scatter plot' },
+          { t: 'Aplicar estatísticas em dataset real', s: 'df.describe(), df.corr(), df.hist()' },
+        ]
+      },
+    ]
+  },
+  {
+    id: 'p1',
+    title: 'Fase 1 — Ecossistema Big Data',
+    period: '6–12 meses',
+    color: '#4f8ef7',
+    colorLight: '#0d1e3d',
+    pillars: [
+      {
+        title: 'Hadoop + HDFS',
+        icon: '🐘',
+        tasks: [
+          { t: 'Entender o conceito de processamento distribuído', s: 'como dados são divididos entre nós' },
+          { t: 'Instalar Hadoop em modo pseudo-distribuído', s: 'Docker é o caminho mais fácil' },
+          { t: 'Comandos básicos do HDFS', s: 'hdfs dfs -ls, -put, -get, -mkdir' },
+          { t: 'Entender MapReduce com exemplos práticos', s: 'word count clássico' },
+        ]
+      },
+      {
+        title: 'Apache Spark',
+        icon: '⚡',
+        tasks: [
+          { t: 'Instalar PySpark e configurar ambiente', s: 'pip install pyspark ou Databricks Community' },
+          { t: 'Entender RDDs, DataFrames e Datasets', s: 'diferenças e quando usar cada um' },
+          { t: 'Transformações vs ações no Spark', s: 'map, filter, groupBy vs collect, count' },
+          { t: 'Spark SQL: queries em DataFrames', s: 'spark.sql() e funções nativas' },
+          { t: 'Projeto: processar dataset grande com Spark', s: '+1 milhão de linhas no Kaggle' },
+        ]
+      },
+      {
+        title: 'Pipelines ETL',
+        icon: '🔄',
+        tasks: [
+          { t: 'Entender o conceito de ETL e ELT', s: 'diferenças e casos de uso' },
+          { t: 'Criar pipeline simples com Python', s: 'extrair CSV → transformar → carregar no banco' },
+          { t: 'Conhecer formatos: Parquet, Avro, ORC', s: 'por que não usar CSV em produção' },
+          { t: 'Primeiro contato com Apache Airflow', s: 'DAGs, tasks, scheduling básico' },
+        ]
+      },
+    ]
+  },
+  {
+    id: 'p2',
+    title: 'Fase 2 — Cloud e Engenharia',
+    period: '1–2 anos',
+    color: '#2fc898',
+    colorLight: '#0a2a20',
+    pillars: [
+      {
+        title: 'Cloud (AWS / GCP)',
+        icon: '☁️',
+        tasks: [
+          { t: 'Criar conta gratuita na AWS ou GCP', s: 'free tier cobre bastante para estudos' },
+          { t: 'Aprender S3 / GCS para Data Lake', s: 'upload, particionamento, lifecycle policies' },
+          { t: 'Conhecer serviços gerenciados de dados', s: 'AWS Glue, Athena, EMR ou GCP Dataflow' },
+          { t: 'Entender IAM: roles e permissões', s: 'essencial para ambientes de produção' },
+          { t: 'Deploy de pipeline Spark na nuvem', s: 'EMR, Dataproc ou Databricks' },
+        ]
+      },
+      {
+        title: 'Apache Kafka',
+        icon: '📨',
+        tasks: [
+          { t: 'Entender o modelo produtor-consumidor', s: 'tópicos, partições e offsets' },
+          { t: 'Instalar Kafka localmente com Docker', s: 'docker-compose com Kafka + Zookeeper' },
+          { t: 'Criar produtor e consumidor em Python', s: 'biblioteca confluent-kafka ou kafka-python' },
+          { t: 'Processar stream com Spark Streaming', s: 'structured streaming com fonte Kafka' },
+        ]
+      },
+      {
+        title: 'dbt + Airflow',
+        icon: '🛠️',
+        tasks: [
+          { t: 'Aprender dbt Core: modelos e testes', s: 'dbt run, dbt test, dbt docs' },
+          { t: 'Criar DAGs complexas no Airflow', s: 'dependências, sensores, retries' },
+          { t: 'Orquestrar pipeline dbt com Airflow', s: 'BashOperator ou dbt Cloud API' },
+        ]
+      },
+      {
+        title: 'Data Warehouse',
+        icon: '🏛️',
+        tasks: [
+          { t: 'Entender modelagem dimensional', s: 'fatos, dimensões, star schema' },
+          { t: 'Criar conta gratuita no Snowflake ou BigQuery', s: 'ambos têm free tier generoso' },
+          { t: 'Carregar dados e criar views analíticas', s: 'integrar com dbt' },
+        ]
+      },
+    ]
+  },
+  {
+    id: 'p3',
+    title: 'Fase 3 — Especialização',
+    period: '2–3 anos',
+    color: '#a78bfa',
+    colorLight: '#1e1530',
+    trilhas: [
+      {
+        name: 'Engenheiro de Dados',
+        badgeColor: '#a78bfa',
+        badgeBg: '#1e1530',
+        pillars: [
+          {
+            title: 'Infraestrutura avançada',
+            icon: '🔧',
+            tasks: [
+              { t: 'Dominar Terraform para infraestrutura como código', s: 'provisionar clusters e buckets' },
+              { t: 'Kubernetes básico para dados', s: 'orquestrar containers de pipelines' },
+              { t: 'Lakehouse: Delta Lake ou Apache Iceberg', s: 'ACID transactions em Data Lake' },
+              { t: 'Otimização de queries Spark em larga escala', s: 'partitioning, caching, broadcast joins' },
+            ]
+          },
+          {
+            title: 'DataOps',
+            icon: '⚙️',
+            tasks: [
+              { t: 'Implementar testes de qualidade de dados', s: 'Great Expectations ou Soda Core' },
+              { t: 'Monitoramento de pipelines com alertas', s: 'Grafana + Prometheus ou CloudWatch' },
+              { t: 'CI/CD para pipelines de dados', s: 'GitHub Actions com dbt e testes' },
+            ]
+          },
+        ]
+      },
+      {
+        name: 'Cientista de Dados',
+        badgeColor: '#f97316',
+        badgeBg: '#2a1508',
+        pillars: [
+          {
+            title: 'Machine Learning',
+            icon: '🤖',
+            tasks: [
+              { t: 'Dominar Scikit-learn para ML clássico', s: 'regressão, classificação, clustering' },
+              { t: 'Aprender XGBoost e LightGBM', s: 'modelos de gradient boosting' },
+              { t: 'Técnicas de feature engineering', s: 'encoding, scaling, seleção de features' },
+              { t: 'Validação cruzada e métricas de avaliação', s: 'evitar overfitting' },
+              { t: 'Competição no Kaggle (top 30%)', s: 'experiência real com dados desafiadores' },
+            ]
+          },
+          {
+            title: 'MLOps',
+            icon: '🚀',
+            tasks: [
+              { t: 'Rastrear experimentos com MLflow', s: 'parâmetros, métricas, artefatos' },
+              { t: 'Servir modelos com FastAPI ou Flask', s: 'criar endpoint REST para inferência' },
+              { t: 'Feature Store: conceitos e ferramentas', s: 'Feast ou Hopsworks' },
+              { t: 'Monitoramento de drift em produção', s: 'Evidently AI ou Seldon' },
+            ]
+          },
+        ]
+      },
+      {
+        name: 'Analista de Dados',
+        badgeColor: '#facc15',
+        badgeBg: '#2a2200',
+        pillars: [
+          {
+            title: 'BI e Visualização',
+            icon: '📈',
+            tasks: [
+              { t: 'Dominar Power BI: DAX e modelagem', s: 'medidas, calculated columns, relationships' },
+              { t: 'Tableau ou Looker como alternativa', s: 'entender o mercado de ferramentas' },
+              { t: 'Criar dashboards executivos do zero', s: 'KPIs, filtros dinâmicos, drill-down' },
+              { t: 'Conectar BI com Data Warehouse', s: 'BigQuery, Snowflake, Redshift' },
+            ]
+          },
+          {
+            title: 'Storytelling com dados',
+            icon: '🎯',
+            tasks: [
+              { t: 'Princípios de visualização de dados', s: 'livro: Storytelling with Data (Cole Nussbaumer)' },
+              { t: 'Apresentar análises para não-técnicos', s: 'simplificar sem perder precisão' },
+              { t: 'Análise A/B testing e testes de hipótese', s: 'p-value, significância estatística' },
+              { t: 'Criar relatório analítico completo', s: 'problema → análise → insights → ação' },
+            ]
+          },
+        ]
+      },
+    ]
+  },
+  {
+    id: 'p4',
+    title: 'Fase 4 — Sênior / Arquiteto',
+    period: '3+ anos',
+    color: '#e879f9',
+    colorLight: '#2a0a2e',
+    pillars: [
+      {
+        title: 'Arquitetura de dados',
+        icon: '🏗️',
+        tasks: [
+          { t: 'Projetar arquitetura Lambda e Kappa', s: 'batch + streaming combinados' },
+          { t: 'Implementar Data Lakehouse com Delta Lake', s: 'unificar batch e streaming' },
+          { t: 'Avaliar e adotar Data Mesh', s: 'domínios, data products, self-serve' },
+          { t: 'Desenhar arquiteturas de referência na nuvem', s: 'documentação para times de engenharia' },
+        ]
+      },
+      {
+        title: 'Governança e LGPD',
+        icon: '🔒',
+        tasks: [
+          { t: 'Implementar catálogo de dados', s: 'Apache Atlas, DataHub ou OpenMetadata' },
+          { t: 'Políticas de acesso e segurança de dados', s: 'RBAC, masking, row-level security' },
+          { t: 'Adequação à LGPD em pipelines', s: 'anonimização, minimização, retenção' },
+          { t: 'Data lineage: rastreabilidade ponta-a-ponta', s: 'OpenLineage, Marquez' },
+        ]
+      },
+      {
+        title: 'IA e futuro',
+        icon: '🧠',
+        tasks: [
+          { t: 'LLMs para análise de dados não estruturados', s: 'RAG sobre documentos e logs' },
+          { t: 'Vector databases: Pinecone, Weaviate', s: 'busca semântica em dados' },
+          { t: 'Pipelines de dados para treinar LLMs', s: 'data quality em escala de petabytes' },
+          { t: 'Real-time AI em streaming com Flink + ML', s: 'fraud detection, recomendação' },
+        ]
+      },
+    ]
+  },
+];
+
+const CERTS = [
+  { name: 'AWS Data Analytics', sub: 'Specialty', icon: '☁️' },
+  { name: 'GCP Data Engineer', sub: 'Professional', icon: '🔵' },
+  { name: 'Databricks Associate', sub: 'Spark', icon: '⚡' },
+  { name: 'Snowflake SnowPro', sub: 'Core', icon: '❄️' },
+  { name: 'dbt Analytics Eng.', sub: 'Certification', icon: '🛠️' },
+  { name: 'Portfólio GitHub', sub: '5+ projetos', icon: '📁' },
+  { name: 'Kaggle Expert', sub: 'Competitions', icon: '🥇' },
+  { name: 'Kaggle Datasets', sub: 'Publicados', icon: '📊' },
+];
+
+const SALARY = [
+  { label: 'Júnior', pct: 20, range: 'R$ 3–5k / mês', color: '#4f8ef7' },
+  { label: 'Pleno', pct: 45, range: 'R$ 6–10k / mês', color: '#2fc898' },
+  { label: 'Sênior', pct: 70, range: 'R$ 12–20k / mês', color: '#a78bfa' },
+  { label: 'Arquiteto', pct: 95, range: 'R$ 18–30k+ / mês', color: '#e879f9' },
+];
+
+// ---- STATE ----
+function getState() {
+  try { return JSON.parse(localStorage.getItem('bd_state') || '{}'); } catch { return {}; }
+}
+function setState(s) { localStorage.setItem('bd_state', JSON.stringify(s)); }
+function toggleTask(id) {
+  const s = getState(); s[id] = !s[id]; setState(s); render();
+}
+function resetAll() {
+  if (confirm('Resetar todo o progresso?')) { localStorage.removeItem('bd_state'); render(); }
+}
+
+// ---- RENDER ----
+function taskId(phaseId, pillarTitle, idx) {
+  return `${phaseId}__${pillarTitle.replace(/\s+/g,'_')}__${idx}`;
+}
+
+function renderTask(tid, task) {
+  const done = getState()[tid];
+  return `<div class="task" onclick="toggleTask('${tid}')">
+    <div class="task-box ${done ? 'done' : ''}"></div>
+    <div class="task-body">
+      <div class="task-main ${done ? 'done' : ''}">${task.t}</div>
+      ${task.s ? `<div class="task-sub">${task.s}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderPillar(phaseId, pillar) {
+  const tasks = pillar.tasks.map((t, i) => {
+    const tid = taskId(phaseId, pillar.title, i);
+    return renderTask(tid, t);
+  }).join('');
+  const done = pillar.tasks.filter((_, i) => getState()[taskId(phaseId, pillar.title, i)]).length;
+  return `<div class="pillar">
+    <div class="pillar-head">
+      <div class="pillar-icon" style="background:rgba(255,255,255,0.06)">${pillar.icon}</div>
+      <div class="pillar-title">${pillar.title}</div>
+      <div class="pillar-count">${done}/${pillar.tasks.length}</div>
+    </div>
+    ${tasks}
+  </div>`;
+}
+
+function allTasksInPhase(phase) {
+  const tasks = [];
+  if (phase.pillars) {
+    phase.pillars.forEach(p => p.tasks.forEach((_, i) => tasks.push(taskId(phase.id, p.title, i))));
+  }
+  if (phase.trilhas) {
+    phase.trilhas.forEach(trilha => trilha.pillars.forEach(p => p.tasks.forEach((_, i) => tasks.push(taskId(phase.id, p.title, i)))));
+  }
+  return tasks;
+}
+
+function renderPhase(phase) {
+  const allIds = allTasksInPhase(phase);
+  const state = getState();
+  const done = allIds.filter(id => state[id]).length;
+  const pct = allIds.length ? Math.round(done / allIds.length * 100) : 0;
+
+  let body = '';
+  if (phase.pillars) {
+    body = `<div class="pillars">${phase.pillars.map(p => renderPillar(phase.id, p)).join('')}</div>`;
+  } else if (phase.trilhas) {
+    body = phase.trilhas.map(trilha => `
+      <div style="margin-bottom:1.2rem">
+        <div class="section-label" style="margin-top:0">
+          <span class="trilha-badge" style="background:${trilha.badgeBg};color:${trilha.badgeColor}">${trilha.name}</span>
+        </div>
+        <div class="pillars">${trilha.pillars.map(p => renderPillar(phase.id, p)).join('')}</div>
+      </div>
+    `).join('');
+  }
+
+  return `<div class="phase">
+    <div class="phase-header">
+      <div class="phase-num" style="background:${phase.colorLight};color:${phase.color}">${phase.id.replace('p','')}</div>
+      <div class="phase-info">
+        <h2>${phase.title}</h2>
+        <p>${phase.period}</p>
+      </div>
+      <div class="phase-mini-bar-wrap"><div class="phase-mini-bar" style="width:${pct}%;background:${phase.color}"></div></div>
+      <div class="phase-pct" style="color:${phase.color}">${pct}%</div>
+    </div>
+    ${body}
+  </div>`;
+}
+
+function renderCerts() {
+  const state = getState();
+  const cards = CERTS.map((c, i) => {
+    const tid = `cert__${i}`;
+    const done = state[tid];
+    return `<div class="cert-card ${done ? 'done' : ''}" onclick="toggleTask('${tid}')">
+      <div class="cert-icon">${c.icon}</div>
+      <div class="cert-info">
+        <div class="cert-name">${c.name}</div>
+        <div class="cert-sub">${c.sub}</div>
+      </div>
+    </div>`;
+  }).join('');
+  return `<div class="phase">
+    <div class="phase-header">
+      <div class="phase-num" style="background:#0a2a1e;color:#34d399">✓</div>
+      <div class="phase-info"><h2>Certificações e portfólio</h2><p>conquistas que validam a carreira</p></div>
+    </div>
+    <div class="certs-grid">${cards}</div>
+  </div>`;
+}
+
+function renderSalary() {
+  const rows = SALARY.map(s => `
+    <div class="salary-row">
+      <div class="salary-label">${s.label}</div>
+      <div class="salary-bar-bg"><div class="salary-bar-fill" style="width:${s.pct}%;background:${s.color}"></div></div>
+      <div class="salary-range">${s.range}</div>
+    </div>
+  `).join('');
+  return `<div class="salary-section">
+    <h3>Faixa salarial estimada — Brasil 2025</h3>
+    ${rows}
+    <p style="font-size:11px;color:var(--muted);margin-top:12px;font-family:var(--mono)">valores variam por empresa, localização e nível de senioridade</p>
+  </div>`;
+}
+
+function updateGlobal() {
+  const state = getState();
+  let total = 0, done = 0;
+  DATA.forEach(phase => {
+    allTasksInPhase(phase).forEach(id => { total++; if (state[id]) done++; });
+  });
+  CERTS.forEach((_, i) => { total++; if (state[`cert__${i}`]) done++; });
+  const pct = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('gp-pct').textContent = pct + '%';
+  document.getElementById('gp-bar').style.width = pct + '%';
+  document.getElementById('gp-label').textContent = `${done} / ${total} tarefas`;
+}
+
+function render() {
+  const app = document.getElementById('app');
+  app.innerHTML =
+    DATA.map(renderPhase).join('') +
+    renderCerts() +
+    renderSalary();
+  updateGlobal();
+}
+
+render();
+</script>
+</body>
+</html>
