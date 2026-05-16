@@ -65,4 +65,4 @@ Caso queira exexutar via local, temos esse passo a passo:
 
 ---
 
-Desenvolvido com ⚡ focado em impulsionar o aprendizado contínuo na área de tecnologia.
+Desenvolvido por ia focado em impulsionar o aprendizado contínuo na área de tecnologia.
