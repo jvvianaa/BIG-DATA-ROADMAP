@@ -54,26 +54,14 @@ O conteúdo do roteiro de estudos está mapeado na aplicação através das segu
 
 Por ser uma aplicação baseada inteiramente no lado do cliente (client-side), **não é necessário instalar nenhuma dependência** (como Node.js ou pacotes externos).
 
+O Projeto pode ser acessado pelo link: https://claude.ai/public/artifacts/c61f325a-b5a1-49ee-af9d-c1a3c4a75ea6
+
+Caso queira exexutar via local, temos esse passo a passo:
+
 1. Faça o clone deste repositório ou baixe o arquivo `bigdata_roadmap.html`.
 2. Dê um duplo clique no arquivo `bigdata_roadmap.html` para abri-lo diretamente em qualquer navegador moderno de sua preferência (Chrome, Edge, Firefox, Safari).
 
 *Dica de desenvolvimento: Se estiver usando o VS Code, você pode utilizar a extensão **Live Server** para rodar o projeto localmente com reload automático.*
-
----
-
-## 📦 Como Customizar os Dados
-
-Se você quiser adaptar este roadmap para outra stack tecnológica (como Front-end, DevOps, etc.), basta abrir o arquivo HTML e modificar as constantes JavaScript no início da tag `<script>`:
-
-* **`DATA`**: Altere as fases, títulos, ícones e subtextos das tarefas.
-* **`CERTS`**: Modifique a lista de certificações recomendadas.
-* **`SALARY`**: Atualize as faixas salariais e níveis de senioridade conforme o nicho escolhido.
-
----
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ---
 
