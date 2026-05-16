@@ -65,4 +65,4 @@ Caso queira exexutar via local, temos esse passo a passo:
 
 ---
 
-Desenvolvido por ia focado em impulsionar o aprendizado contínuo na área de tecnologia.
+Desenvolvido por IA focado em impulsionar o aprendizado contínuo na área de tecnologia.
